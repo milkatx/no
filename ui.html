@@ -877,7 +877,7 @@
         <textarea
           id="customPages"
           class="form-input"
-          placeholder="Cover&#10;---&#10;Project Context&#10;Presentation&#10;---&#10;Personas&#10;Competitor Analysis&#10;User Journey"
+          placeholder="Cover&#10;---&#10;Project Context&#10;---&#10;Competitor Analysis"
           style="min-height: 160px"
         ></textarea>
         <div class="form-hint">
@@ -1141,7 +1141,9 @@
     importedPages.innerHTML = "";
 
     // Filter out dividers and get actual page names
-    const actualPages = pages.filter(p => p && !p.isDivider && p.name && p.name !== "---");
+    const actualPages = pages.filter(
+      (p) => p && !p.isDivider && p.name && p.name !== "---",
+    );
     const displayPages = actualPages.slice(0, 5);
 
     displayPages.forEach((page) => {
