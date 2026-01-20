@@ -1,0 +1,494 @@
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+  }
+  h2 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+  .tab {
+    flex: 1;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.2s;
+  }
+  .tab:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  .tab.active {
+    color: #18A0FB;
+    border-bottom-color: #18A0FB;
+    background-color: white;
+  }
+
+  /* Tab Content */
+  .tab-content {
+    display: none;
+    padding: 16px;
+  }
+  .tab-content.active {
+    display: block;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 12px;
+  }
+  label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: #333;
+  }
+  input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: inherit;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #18A0FB;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  select {
+    background-color: white;
+    cursor: pointer;
+  }
+  .help-text {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  /* Buttons */
+  .buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  button.primary {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    background-color: #18A0FB;
+    color: white;
+  }
+  button.primary:hover {
+    background-color: #0D8BE0;
+  }
+  button.primary:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  button.secondary {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  button.secondary:hover {
+    background-color: #e0e0e0;
+  }
+
+  /* Preview */
+  .preview {
+    margin: 0 0 16px 0;
+    padding: 12px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
+  .preview-label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 11px;
+    color: #666;
+  }
+  .preview-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    word-break: break-word;
+  }
+
+  /* Project Type Cards */
+  .project-types {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .project-card {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .project-card:hover {
+    border-color: #18A0FB;
+    background-color: #f9f9f9;
+  }
+  .project-card.selected {
+    border-color: #18A0FB;
+    background-color: #E3F2FD;
+  }
+  .project-card-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #333;
+  }
+  .project-card-desc {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.4;
+  }
+  .project-card-pages {
+    font-size: 10px;
+    color: #999;
+    margin-top: 6px;
+  }
+</style>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" data-tab="rename">Rename File</button>
+  <button class="tab" data-tab="structure">Create Structure</button>
+</div>
+
+<!-- Tab 1: Rename File -->
+<div class="tab-content active" id="rename-tab">
+  <h2>Rename File</h2>
+
+  <div class="preview">
+    <div class="preview-label">PREVIEW</div>
+    <div class="preview-text" id="preview">Enter product name to see preview</div>
+  </div>
+
+  <div class="form-group">
+    <label for="clientName">Client Name</label>
+    <input id="clientName" type="text" placeholder="e.g., Acme Corp">
+    <div class="help-text">Client or company name (optional)</div>
+  </div>
+
+  <div class="form-group">
+    <label for="productName">Product Name *</label>
+    <input id="productName" type="text" placeholder="e.g., Dashboard Design">
+    <div class="help-text">Main name for the file</div>
+  </div>
+
+  <div class="form-group">
+    <label for="version">Version</label>
+    <input id="version" type="text" placeholder="e.g., 1.0, 2.1, 0.5">
+    <div class="help-text">Version number (optional)</div>
+  </div>
+
+  <div class="form-group">
+    <label for="tags">Tags</label>
+    <input id="tags" type="text" placeholder="e.g., mobile, ios, final">
+    <div class="help-text">Comma-separated tags (optional)</div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description" placeholder="Additional notes or context..."></textarea>
+    <div class="help-text">Stored as metadata (optional)</div>
+  </div>
+
+  <div class="buttons">
+    <button id="renameBtn" class="primary" disabled>Rename File</button>
+    <button id="cancelBtn1" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<!-- Tab 2: Create Structure -->
+<div class="tab-content" id="structure-tab">
+  <h2>Create Page Structure</h2>
+
+  <div class="form-group">
+    <label>Select Project Type</label>
+    <div class="project-types">
+      <div class="project-card" data-type="web-app">
+        <div class="project-card-title">Web Application</div>
+        <div class="project-card-desc">Complete structure for web app projects</div>
+        <div class="project-card-pages">Pages: Cover, Design System, Components, Flows, Dev Handoff</div>
+      </div>
+
+      <div class="project-card" data-type="mobile-app">
+        <div class="project-card-title">Mobile App</div>
+        <div class="project-card-desc">iOS/Android app design structure</div>
+        <div class="project-card-pages">Pages: Cover, Styleguide, Screens, Wireframes, Prototypes, Assets</div>
+      </div>
+
+      <div class="project-card" data-type="design-system">
+        <div class="project-card-title">Design System</div>
+        <div class="project-card-desc">Component library and documentation</div>
+        <div class="project-card-pages">Pages: Cover, Foundations, Components, Patterns, Documentation</div>
+      </div>
+
+      <div class="project-card" data-type="website">
+        <div class="project-card-title">Marketing Website</div>
+        <div class="project-card-desc">Landing pages and marketing sites</div>
+        <div class="project-card-pages">Pages: Cover, Homepage, Inner Pages, Components, Responsive</div>
+      </div>
+
+      <div class="project-card" data-type="branding">
+        <div class="project-card-title">Branding Project</div>
+        <div class="project-card-desc">Brand identity and guidelines</div>
+        <div class="project-card-pages">Pages: Cover, Logo, Colors, Typography, Applications</div>
+      </div>
+
+      <div class="project-card" data-type="custom">
+        <div class="project-card-title">✨ Custom Structure</div>
+        <div class="project-card-desc">Create your own page structure</div>
+        <div class="project-card-pages">Define custom pages</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="customStructureInput" style="display: none; margin-top: 16px;">
+    <div class="form-group">
+      <label for="customPages">Page Names (one per line)</label>
+      <textarea id="customPages" placeholder="🎨 Cover&#10;---&#10;📐 Project Context&#10;📊 Presentation&#10;---&#10;👥 Personas&#10;📈 Competitor Analysis&#10;🗺️ User Journey" style="min-height: 160px;"></textarea>
+      <div class="help-text">Add page names (one per line). Use "---" to insert divider pages between sections</div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button id="createStructureBtn" class="primary" disabled>Create Structure</button>
+    <button id="cancelBtn2" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<script>
+// Tab switching
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const targetTab = tab.dataset.tab;
+
+    tabs.forEach(t => t.classList.remove('active'));
+    tabContents.forEach(tc => tc.classList.remove('active'));
+
+    tab.classList.add('active');
+    document.getElementById(targetTab + '-tab').classList.add('active');
+  });
+});
+
+// ============ RENAME TAB ============
+const clientNameInput = document.getElementById('clientName');
+const productNameInput = document.getElementById('productName');
+const versionInput = document.getElementById('version');
+const tagsInput = document.getElementById('tags');
+const descriptionInput = document.getElementById('description');
+const renameButton = document.getElementById('renameBtn');
+const previewText = document.getElementById('preview');
+
+function updatePreview() {
+  const clientName = clientNameInput.value.trim();
+  const productName = productNameInput.value.trim();
+  const version = versionInput.value.trim();
+  const tags = tagsInput.value.trim();
+
+  if (!productName) {
+    previewText.textContent = 'Enter product name to see preview';
+    renameButton.disabled = true;
+    return;
+  }
+
+  // Build filename: [Client] - Product Name - v1.0 [tags]
+  let fileName = '';
+
+  if (clientName) {
+    fileName += '[' + clientName + '] ';
+  }
+
+  fileName += productName;
+
+  if (version) {
+    fileName += ' - v' + version;
+  }
+
+  if (tags) {
+    const tagArray = tags.split(',').map(t => t.trim()).filter(t => t);
+    if (tagArray.length > 0) {
+      fileName += ' [' + tagArray.join(', ') + ']';
+    }
+  }
+
+  previewText.textContent = fileName;
+  renameButton.disabled = false;
+}
+
+clientNameInput.addEventListener('input', updatePreview);
+productNameInput.addEventListener('input', updatePreview);
+versionInput.addEventListener('input', updatePreview);
+tagsInput.addEventListener('input', updatePreview);
+
+renameButton.addEventListener('click', () => {
+  const clientName = clientNameInput.value.trim();
+  const productName = productNameInput.value.trim();
+  const version = versionInput.value.trim();
+  const tags = tagsInput.value.trim();
+  const description = descriptionInput.value.trim();
+
+  if (!productName) return;
+
+  parent.postMessage({
+    pluginMessage: {
+      type: 'rename-file',
+      clientName,
+      productName,
+      version,
+      tags,
+      description
+    }
+  }, '*');
+});
+
+document.getElementById('cancelBtn1').addEventListener('click', () => {
+  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
+});
+
+// ============ STRUCTURE TAB ============
+const projectCards = document.querySelectorAll('.project-card');
+const createStructureBtn = document.getElementById('createStructureBtn');
+const customStructureInput = document.getElementById('customStructureInput');
+const customPagesTextarea = document.getElementById('customPages');
+let selectedProjectType = null;
+
+projectCards.forEach(card => {
+  card.addEventListener('click', () => {
+    projectCards.forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedProjectType = card.dataset.type;
+
+    // Show/hide custom input
+    if (selectedProjectType === 'custom') {
+      customStructureInput.style.display = 'block';
+      createStructureBtn.disabled = !customPagesTextarea.value.trim();
+    } else {
+      customStructureInput.style.display = 'none';
+      createStructureBtn.disabled = false;
+    }
+  });
+});
+
+// Enable button when custom pages are typed
+customPagesTextarea.addEventListener('input', () => {
+  if (selectedProjectType === 'custom') {
+    createStructureBtn.disabled = !customPagesTextarea.value.trim();
+  }
+});
+
+createStructureBtn.addEventListener('click', () => {
+  if (!selectedProjectType) return;
+
+  const message = {
+    type: 'create-structure',
+    projectType: selectedProjectType
+  };
+
+  // If custom, add the page names
+  if (selectedProjectType === 'custom') {
+    const customPages = customPagesTextarea.value
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0);
+
+    if (customPages.length === 0) return;
+
+    message.customPages = customPages;
+  }
+
+  parent.postMessage({
+    pluginMessage: message
+  }, '*');
+});
+
+document.getElementById('cancelBtn2').addEventListener('click', () => {
+  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
+});
+
+// ============ MESSAGE HANDLING ============
+window.onmessage = (event) => {
+  const msg = event.data.pluginMessage;
+
+  // Load existing data and populate fields
+  if (msg.type === 'load-existing-data') {
+    const data = msg.data;
+    let hasExistingData = false;
+
+    if (data.clientName) {
+      clientNameInput.value = data.clientName;
+      hasExistingData = true;
+    }
+    if (data.productName) {
+      productNameInput.value = data.productName;
+      hasExistingData = true;
+    }
+    if (data.version) {
+      versionInput.value = data.version;
+      hasExistingData = true;
+    }
+    if (data.tags) {
+      tagsInput.value = data.tags;
+      hasExistingData = true;
+    }
+    if (data.description) {
+      descriptionInput.value = data.description;
+      hasExistingData = true;
+    }
+
+    // Change button text if updating existing data
+    if (hasExistingData) {
+      renameButton.textContent = 'Update File';
+    }
+
+    // Update preview if data exists
+    updatePreview();
+  }
+};
+
+// Focus on product name input on load
+productNameInput.focus();
+</script>
