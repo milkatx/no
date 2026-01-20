@@ -1,0 +1,81 @@
+{
+  "name": "Product Design Playbook",
+  "pages": [
+    {
+      "name": "Cover",
+      "description": "Project cover page with key info",
+      "bestPractices": [
+        "Include project name",
+        "Add date and version",
+        "List team members"
+      ]
+    },
+    {
+      "name": "---",
+      "isDivider": true
+    },
+    {
+      "name": "Research",
+      "description": "User research and insights",
+      "bestPractices": [
+        "Document user interviews",
+        "Add personas",
+        "Include journey maps"
+      ]
+    },
+    {
+      "name": "Competitive Analysis",
+      "description": "Market and competitor research",
+      "bestPractices": [
+        "Screenshot competitors",
+        "Note strengths/weaknesses",
+        "Identify opportunities"
+      ]
+    },
+    {
+      "name": "---",
+      "isDivider": true
+    },
+    {
+      "name": "Wireframes",
+      "description": "Low-fidelity layouts",
+      "bestPractices": [
+        "Keep it simple",
+        "Focus on structure",
+        "Annotate decisions"
+      ]
+    },
+    {
+      "name": "UI Design",
+      "description": "High-fidelity mockups",
+      "bestPractices": [
+        "Follow design system",
+        "Use consistent spacing",
+        "Check accessibility"
+      ]
+    },
+    {
+      "name": "Prototypes",
+      "description": "Interactive flows",
+      "bestPractices": [
+        "Link key user flows",
+        "Add micro-interactions",
+        "Test with users"
+      ]
+    },
+    {
+      "name": "---",
+      "isDivider": true
+    },
+    {
+      "name": "Components",
+      "description": "Reusable UI components",
+      "bestPractices": ["Use auto-layout", "Add variants", "Document usage"]
+    },
+    {
+      "name": "Dev Handoff",
+      "description": "Specs for development",
+      "bestPractices": ["Add redlines", "Export assets", "Include tokens"]
+    }
+  ]
+}

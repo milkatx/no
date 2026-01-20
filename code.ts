@@ -10,6 +10,7 @@ interface PluginMessage {
   projectType?: string;
   fileName?: string;
   customPages?: string[];
+  importedTemplate?: ImportedTemplate;
 }
 
 interface PageTemplate {
@@ -17,6 +18,11 @@ interface PageTemplate {
   description: string;
   bestPractices: string[];
   isDivider?: boolean;
+}
+
+interface ImportedTemplate {
+  name: string;
+  pages: PageTemplate[];
 }
 
 // Project structure templates with detailed information
@@ -302,6 +308,16 @@ const existingProductName = figma.root.getPluginData("productName") || "";
 const existingVersion = figma.root.getPluginData("version") || "";
 const existingTags = figma.root.getPluginData("tags") || "";
 const existingDescription = figma.root.getPluginData("description") || "";
+const importedTemplateRaw = figma.root.getPluginData("importedTemplate") || "";
+
+let importedTemplate: ImportedTemplate | null = null;
+if (importedTemplateRaw) {
+  try {
+    importedTemplate = JSON.parse(importedTemplateRaw) as ImportedTemplate;
+  } catch (error) {
+    console.warn("Failed to parse imported template:", error);
+  }
+}
 
 const existingData = {
   clientName: existingClientName,
@@ -309,6 +325,8 @@ const existingData = {
   version: existingVersion,
   tags: existingTags,
   description: existingDescription,
+  importedTemplateName: importedTemplate?.name ?? "",
+  importedTemplatePages: importedTemplate?.pages?.length ?? 0,
 };
 
 figma.ui.postMessage({
@@ -385,6 +403,60 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
     }
   }
 
+  // ============ SAVE IMPORTED TEMPLATE ============
+  if (msg.type === "save-imported-template") {
+    try {
+      const payload = msg.importedTemplate as ImportedTemplate | undefined;
+
+      if (
+        !payload ||
+        !payload.name ||
+        !payload.pages ||
+        !Array.isArray(payload.pages) ||
+        payload.pages.length === 0
+      ) {
+        figma.notify("❌ Invalid template. Provide a name and at least one page.", {
+          error: true,
+        });
+        return;
+      }
+
+      const normalizedPages = payload.pages.map((page) => ({
+        name: page.name || "Untitled",
+        description: page.description || "Custom page",
+        bestPractices: Array.isArray(page.bestPractices)
+          ? page.bestPractices
+          : [],
+        isDivider: page.isDivider === true,
+      }));
+
+      const normalizedTemplate: ImportedTemplate = {
+        name: payload.name,
+        pages: normalizedPages,
+      };
+
+      importedTemplate = normalizedTemplate;
+      figma.root.setPluginData(
+        "importedTemplate",
+        JSON.stringify(normalizedTemplate),
+      );
+
+      figma.notify(`✅ Imported template "${payload.name}" saved`, {
+        timeout: 3000,
+      });
+
+      figma.ui.postMessage({
+        type: "imported-template-saved",
+        data: normalizedTemplate,
+      });
+    } catch (error) {
+      figma.notify("❌ Error saving template: " + (error as Error).message, {
+        error: true,
+        timeout: 4000,
+      });
+    }
+  }
+
   // ============ CREATE STRUCTURE ============
   if (msg.type === "create-structure") {
     try {
@@ -400,8 +472,15 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
 
       let pageTemplates: PageTemplate[];
 
-      // Handle custom structure
-      if (projectType === "custom") {
+      if (projectType === "imported") {
+        if (!importedTemplate || !importedTemplate.pages.length) {
+          figma.notify("❌ No imported template saved", { error: true });
+          figma.closePlugin();
+          return;
+        }
+
+        pageTemplates = importedTemplate.pages;
+      } else if (projectType === "custom") {
         if (!msg.customPages || msg.customPages.length === 0) {
           figma.notify("❌ Please enter at least one page name", {
             error: true,
@@ -695,7 +774,12 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
       figma.root.setPluginData("structureCreated", new Date().toISOString());
 
       // Show success notification
-      figma.notify(`✅ Created ${pageTemplates.length} pages with guidelines`, {
+      const includesGuidelines = projectType !== "custom";
+      const successMessage = includesGuidelines
+        ? `✅ Created ${pageTemplates.length} pages with guidelines`
+        : `✅ Created ${pageTemplates.length} pages`;
+
+      figma.notify(successMessage, {
         timeout: 3000,
       });
 

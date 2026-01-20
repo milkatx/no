@@ -34,6 +34,8 @@ Opinionated Figma plugin that renames the current file with consistent metadata 
   - For **Custom Structure**, enter one page name per line:
     - `---` (or `--`/`—`) adds a divider page.
     - Other lines create empty pages (no guideline frames).
+- **Configuration tab**
+  - Import a JSON template (either `{ name, pages: [...] }` or just an array of page objects) and save it as an “Imported Template” option in Create Structure.
 
 ## Contribution & PR flow
 - **Branch names:** `feature/<short-desc>`, `fix/<issue-or-bug>`, or `chore/<task>`.

@@ -1,494 +1,1422 @@
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
   * {
     box-sizing: border-box;
-  }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    padding: 0;
     margin: 0;
-    font-size: 12px;
-  }
-  h2 {
-    margin: 0 0 12px 0;
-    font-size: 14px;
-    font-weight: 600;
+    padding: 0;
   }
 
-  /* Tabs */
-  .tabs {
+  body {
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+    background: linear-gradient(180deg, #e6f0eb 0%, #fff 100%);
+    min-height: 100vh;
+    color: #1a1a1a;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Accent Colors */
+  :root {
+    --accent: #003a1f;
+    --accent-hover: #004d2a;
+    --accent-light: #e6f0eb;
+    --accent-lighter: #f3f9f6;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --bg-card: #ffffff;
+    --bg-subtle: #f9fafb;
+    --border: #e5e7eb;
+    --border-focus: #ffd60a;
+    --success: #10b981;
+    --error: #ef4444;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+  }
+
+  /* Header */
+  .header {
     display: flex;
-    border-bottom: 1px solid #ddd;
-    background-color: #f9f9f9;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
-  .tab {
-    flex: 1;
-    padding: 12px 16px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  .logo-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--accent);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 12px;
-    font-weight: 500;
-    color: #666;
-    transition: all 0.2s;
   }
-  .tab:hover {
-    background-color: #f0f0f0;
-    color: #333;
+
+  /* Navigation Tabs */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+    background: var(--bg-card);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  .tab.active {
-    color: #18A0FB;
-    border-bottom-color: #18A0FB;
-    background-color: white;
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 12px;
+    background: var(--bg-subtle);
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+
+  .nav-tab:hover {
+    background: var(--accent-light);
+    color: var(--text-primary);
+  }
+
+  .nav-tab.active {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-tab-icon {
+    font-size: 12px;
+  }
+
+  /* Main Content */
+  .main-content {
+    padding: 12px 12px;
   }
 
   /* Tab Content */
   .tab-content {
     display: none;
-    padding: 16px;
+    animation: fadeIn 0.3s ease;
   }
+
   .tab-content.active {
     display: block;
   }
 
-  /* Form Elements */
-  .form-group {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Section Title */
+  .section-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    letter-spacing: -0.02em;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
     margin-bottom: 12px;
   }
-  label {
-    display: block;
-    margin-bottom: 4px;
-    font-weight: 500;
-    color: #333;
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
   }
-  input, textarea, select {
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--accent-light);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .card-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* Preview Banner */
+  .preview-banner {
+    background: linear-gradient(135deg, var(--accent) 0%, #1a5c3a 100%);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-banner::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+  }
+
+  .preview-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 3px;
+  }
+
+  .preview-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    word-break: break-word;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .form-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .form-label .required {
+    color: var(--error);
+  }
+
+  .form-input {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 8px 10px;
+    background: var(--bg-subtle);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
     font-size: 12px;
     font-family: inherit;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
   }
-  input:focus, textarea:focus, select:focus {
+
+  .form-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-input:hover {
+    background: #f3f4f6;
+  }
+
+  .form-input:focus {
     outline: none;
-    border-color: #18A0FB;
+    background: var(--bg-card);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-light);
   }
-  textarea {
+
+  textarea.form-input {
     resize: vertical;
     min-height: 60px;
   }
-  select {
-    background-color: white;
-    cursor: pointer;
+
+  .form-hint {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    display: none;
   }
-  .help-text {
+
+  /* Tags Input Display */
+  .tags-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: var(--accent);
+    color: white;
+    border-radius: var(--radius-full);
     font-size: 11px;
-    color: #666;
-    margin-top: 4px;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .tag-chip-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 9px;
+    line-height: 1;
+    transition: background 0.15s ease;
+  }
+
+  .tag-chip-remove:hover {
+    background: rgba(255, 255, 255, 0.4);
   }
 
   /* Buttons */
-  .buttons {
+  .btn-group {
     display: flex;
     gap: 8px;
-    margin-top: 16px;
+    margin-top: 14px;
   }
-  button.primary {
+
+  .btn {
     flex: 1;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-full);
     font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
+    font-weight: 700;
     font-family: inherit;
-    background-color: #18A0FB;
-    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
   }
-  button.primary:hover {
-    background-color: #0D8BE0;
+
+  .btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: var(--shadow-md);
   }
-  button.primary:disabled {
-    background-color: #ccc;
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-primary:disabled {
+    background: var(--border);
+    color: var(--text-muted);
     cursor: not-allowed;
-  }
-  button.secondary {
-    flex: 1;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: inherit;
-    background-color: #f0f0f0;
-    color: #333;
-  }
-  button.secondary:hover {
-    background-color: #e0e0e0;
+    transform: none;
+    box-shadow: none;
   }
 
-  /* Preview */
-  .preview {
-    margin: 0 0 16px 0;
-    padding: 12px;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-  }
-  .preview-label {
-    font-weight: 500;
-    margin-bottom: 4px;
-    font-size: 11px;
-    color: #666;
-  }
-  .preview-text {
-    font-size: 12px;
-    font-weight: 600;
-    color: #333;
-    word-break: break-word;
+  .btn-secondary {
+    background: var(--bg-subtle);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
   }
 
-  /* Project Type Cards */
-  .project-types {
+  .btn-secondary:hover {
+    background: #f3f4f6;
+    color: var(--text-primary);
+  }
+
+  /* Project Type Grid */
+  .project-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin-bottom: 12px;
   }
+
   .project-card {
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
+    position: relative;
+    padding: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    transition: all 0.2s;
+    transition:
+      border-color 0.3s ease,
+      background-color 0.3s ease,
+      box-shadow 0.3s ease;
+    overflow: hidden;
   }
+
   .project-card:hover {
-    border-color: #18A0FB;
-    background-color: #f9f9f9;
+    border-color: rgba(0, 58, 31, 0.3);
+    background: var(--accent-lighter);
+    box-shadow: 0 2px 8px rgba(0, 58, 31, 0.08);
   }
+
   .project-card.selected {
-    border-color: #18A0FB;
-    background-color: #E3F2FD;
+    border-color: var(--accent);
+    background: var(--accent-light);
+    box-shadow: 0 0 0 2px rgba(0, 58, 31, 0.1);
   }
-  .project-card-title {
-    font-weight: 600;
+
+  .project-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 4px;
-    color: #333;
   }
+
+  .project-card-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--accent-light);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    color: #ffffff;
+  }
+
+  .project-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
   .project-card-desc {
-    font-size: 11px;
-    color: #666;
-    line-height: 1.4;
-  }
-  .project-card-pages {
     font-size: 10px;
-    color: #999;
-    margin-top: 6px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    line-height: 1.3;
+    display: none;
+  }
+
+  .project-card-pages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+
+  .page-tag {
+    padding: 2px 6px;
+    background: var(--bg-subtle);
+    border-radius: var(--radius-sm);
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .project-card.selected .page-tag {
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  /* Custom Structure Textarea */
+  .custom-structure-box {
+    display: none;
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--bg-subtle);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .custom-structure-box.visible {
+    display: block;
+  }
+
+  /* Status Banner */
+  .status-banner {
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .status-banner.info {
+    background: var(--accent-light);
+    color: var(--text-primary);
+  }
+
+  .status-banner.success {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-banner.error {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .status-icon {
+    font-size: 16px;
+  }
+
+  /* File Input Styling */
+  .file-input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--bg-subtle);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .file-input-wrapper:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .file-input-wrapper input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .file-input-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .file-input-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .file-input-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Floating Action Button */
+  .fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.2s ease;
+  }
+
+  .fab:hover {
+    transform: scale(1.1);
+    background: var(--accent-hover);
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  /* Chip/Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--accent);
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .badge-icon {
+    font-size: 12px;
+  }
+
+  /* Wave Animation for Icon */
+  @keyframes wave {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(20deg);
+    }
+    75% {
+      transform: rotate(-15deg);
+    }
+  }
+
+  .wave-icon {
+    display: inline-block;
+    animation: wave 1s ease-in-out infinite;
+    transform-origin: 70% 70%;
   }
 </style>
 
-<!-- Tabs -->
-<div class="tabs">
-  <button class="tab active" data-tab="rename">Rename File</button>
-  <button class="tab" data-tab="structure">Create Structure</button>
-</div>
-
-<!-- Tab 1: Rename File -->
-<div class="tab-content active" id="rename-tab">
-  <h2>Rename File</h2>
-
-  <div class="preview">
-    <div class="preview-label">PREVIEW</div>
-    <div class="preview-text" id="preview">Enter product name to see preview</div>
-  </div>
-
-  <div class="form-group">
-    <label for="clientName">Client Name</label>
-    <input id="clientName" type="text" placeholder="e.g., Acme Corp">
-    <div class="help-text">Client or company name (optional)</div>
-  </div>
-
-  <div class="form-group">
-    <label for="productName">Product Name *</label>
-    <input id="productName" type="text" placeholder="e.g., Dashboard Design">
-    <div class="help-text">Main name for the file</div>
-  </div>
-
-  <div class="form-group">
-    <label for="version">Version</label>
-    <input id="version" type="text" placeholder="e.g., 1.0, 2.1, 0.5">
-    <div class="help-text">Version number (optional)</div>
-  </div>
-
-  <div class="form-group">
-    <label for="tags">Tags</label>
-    <input id="tags" type="text" placeholder="e.g., mobile, ios, final">
-    <div class="help-text">Comma-separated tags (optional)</div>
-  </div>
-
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea id="description" placeholder="Additional notes or context..."></textarea>
-    <div class="help-text">Stored as metadata (optional)</div>
-  </div>
-
-  <div class="buttons">
-    <button id="renameBtn" class="primary" disabled>Rename File</button>
-    <button id="cancelBtn1" class="secondary">Cancel</button>
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">F</div>
+    <span>Nó</span>
   </div>
 </div>
 
-<!-- Tab 2: Create Structure -->
-<div class="tab-content" id="structure-tab">
-  <h2>Create Page Structure</h2>
+<!-- Navigation Tabs -->
+<div class="nav-tabs">
+  <button class="nav-tab active" data-tab="rename">
+    <span class="nav-tab-icon">&#9997;</span>
+    Rename
+  </button>
+  <button class="nav-tab" data-tab="structure">
+    <span class="nav-tab-icon">&#128196;</span>
+    Structure
+  </button>
+  <button class="nav-tab" data-tab="config">
+    <span class="nav-tab-icon">&#9881;</span>
+    Config
+  </button>
+</div>
 
-  <div class="form-group">
-    <label>Select Project Type</label>
-    <div class="project-types">
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Tab 1: Rename File -->
+  <div class="tab-content active" id="rename-tab">
+    <h1 class="section-title">Rename File</h1>
+    <p class="section-subtitle">
+      Organize your Figma files with a consistent naming convention
+    </p>
+
+    <div class="preview-banner">
+      <div class="preview-label">Preview</div>
+      <div class="preview-text" id="preview">
+        Enter product name to see preview
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="form-group">
+        <label class="form-label">Client Name</label>
+        <input
+          id="clientName"
+          class="form-input"
+          type="text"
+          placeholder="e.g., Acme Corp"
+        />
+        <div class="form-hint">Client or company name (optional)</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label"
+          >Product Name <span class="required">*</span></label
+        >
+        <input
+          id="productName"
+          class="form-input"
+          type="text"
+          placeholder="e.g., Dashboard Design"
+        />
+        <div class="form-hint">Main name for the file</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Version</label>
+        <input
+          id="version"
+          class="form-input"
+          type="text"
+          placeholder="e.g., 1.0, 2.1"
+        />
+        <div class="form-hint">Version number (optional)</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tags</label>
+        <input
+          id="tags"
+          class="form-input"
+          type="text"
+          placeholder="e.g., mobile, ios, final"
+        />
+        <div class="form-hint">Comma-separated tags (optional)</div>
+        <div class="tags-preview" id="tagsPreview"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea
+          id="description"
+          class="form-input"
+          placeholder="Additional notes or context..."
+        ></textarea>
+        <div class="form-hint">Stored as metadata (optional)</div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button id="renameBtn" class="btn btn-primary" disabled>
+        <span class="wave-icon">&#128075;</span>
+        Rename File
+      </button>
+      <button id="cancelBtn1" class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Tab 2: Create Structure -->
+  <div class="tab-content" id="structure-tab">
+    <h1 class="section-title">Create Structure</h1>
+    <p class="section-subtitle">
+      Set up your project with predefined page templates
+    </p>
+
+    <div class="project-grid">
       <div class="project-card" data-type="web-app">
-        <div class="project-card-title">Web Application</div>
-        <div class="project-card-desc">Complete structure for web app projects</div>
-        <div class="project-card-pages">Pages: Cover, Design System, Components, Flows, Dev Handoff</div>
+        <div class="project-card-header">
+          <div class="project-card-icon">&#127760;</div>
+          <div class="project-card-title">Web Application</div>
+        </div>
+        <div class="project-card-desc">
+          Complete structure for web app projects
+        </div>
+        <div class="project-card-pages">
+          <span class="page-tag">Cover</span>
+          <span class="page-tag">Design System</span>
+          <span class="page-tag">Components</span>
+          <span class="page-tag">Flows</span>
+          <span class="page-tag">Dev Handoff</span>
+        </div>
       </div>
 
       <div class="project-card" data-type="mobile-app">
-        <div class="project-card-title">Mobile App</div>
+        <div class="project-card-header">
+          <div class="project-card-icon">&#128241;</div>
+          <div class="project-card-title">Mobile App</div>
+        </div>
         <div class="project-card-desc">iOS/Android app design structure</div>
-        <div class="project-card-pages">Pages: Cover, Styleguide, Screens, Wireframes, Prototypes, Assets</div>
+        <div class="project-card-pages">
+          <span class="page-tag">Cover</span>
+          <span class="page-tag">Styleguide</span>
+          <span class="page-tag">Screens</span>
+          <span class="page-tag">Wireframes</span>
+          <span class="page-tag">Prototypes</span>
+          <span class="page-tag">Assets</span>
+        </div>
       </div>
 
       <div class="project-card" data-type="design-system">
-        <div class="project-card-title">Design System</div>
+        <div class="project-card-header">
+          <div class="project-card-icon">&#127912;</div>
+          <div class="project-card-title">Design System</div>
+        </div>
         <div class="project-card-desc">Component library and documentation</div>
-        <div class="project-card-pages">Pages: Cover, Foundations, Components, Patterns, Documentation</div>
+        <div class="project-card-pages">
+          <span class="page-tag">Cover</span>
+          <span class="page-tag">Foundations</span>
+          <span class="page-tag">Components</span>
+          <span class="page-tag">Patterns</span>
+          <span class="page-tag">Documentation</span>
+        </div>
       </div>
 
       <div class="project-card" data-type="website">
-        <div class="project-card-title">Marketing Website</div>
+        <div class="project-card-header">
+          <div class="project-card-icon">&#128640;</div>
+          <div class="project-card-title">Marketing Website</div>
+        </div>
         <div class="project-card-desc">Landing pages and marketing sites</div>
-        <div class="project-card-pages">Pages: Cover, Homepage, Inner Pages, Components, Responsive</div>
+        <div class="project-card-pages">
+          <span class="page-tag">Cover</span>
+          <span class="page-tag">Homepage</span>
+          <span class="page-tag">Inner Pages</span>
+          <span class="page-tag">Components</span>
+          <span class="page-tag">Responsive</span>
+        </div>
       </div>
 
       <div class="project-card" data-type="branding">
-        <div class="project-card-title">Branding Project</div>
+        <div class="project-card-header">
+          <div class="project-card-icon">&#10024;</div>
+          <div class="project-card-title">Branding Project</div>
+        </div>
         <div class="project-card-desc">Brand identity and guidelines</div>
-        <div class="project-card-pages">Pages: Cover, Logo, Colors, Typography, Applications</div>
+        <div class="project-card-pages">
+          <span class="page-tag">Cover</span>
+          <span class="page-tag">Logo</span>
+          <span class="page-tag">Colors</span>
+          <span class="page-tag">Typography</span>
+          <span class="page-tag">Applications</span>
+        </div>
+      </div>
+
+      <div
+        class="project-card"
+        data-type="imported"
+        id="importedCard"
+        style="display: none"
+      >
+        <div class="project-card-header">
+          <div class="project-card-icon">&#128230;</div>
+          <div class="project-card-title" id="importedDesc">
+            Imported Template
+          </div>
+        </div>
+        <div class="project-card-desc">Custom JSON template</div>
+        <div class="project-card-pages" id="importedPages"></div>
       </div>
 
       <div class="project-card" data-type="custom">
-        <div class="project-card-title">✨ Custom Structure</div>
+        <div class="project-card-header">
+          <div class="project-card-icon" style="background: #7cb68e">
+            &#10024;
+          </div>
+          <div class="project-card-title">Custom Structure</div>
+        </div>
         <div class="project-card-desc">Create your own page structure</div>
-        <div class="project-card-pages">Define custom pages</div>
+        <div class="project-card-pages">
+          <span class="page-tag">Define custom pages</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="customStructureInput" style="display: none; margin-top: 16px;">
-    <div class="form-group">
-      <label for="customPages">Page Names (one per line)</label>
-      <textarea id="customPages" placeholder="🎨 Cover&#10;---&#10;📐 Project Context&#10;📊 Presentation&#10;---&#10;👥 Personas&#10;📈 Competitor Analysis&#10;🗺️ User Journey" style="min-height: 160px;"></textarea>
-      <div class="help-text">Add page names (one per line). Use "---" to insert divider pages between sections</div>
+    <div class="custom-structure-box" id="customStructureInput">
+      <div class="form-group" style="margin-bottom: 0">
+        <label class="form-label">Page Names (one per line)</label>
+        <textarea
+          id="customPages"
+          class="form-input"
+          placeholder="Cover&#10;---&#10;Project Context&#10;Presentation&#10;---&#10;Personas&#10;Competitor Analysis&#10;User Journey"
+          style="min-height: 160px"
+        ></textarea>
+        <div class="form-hint">
+          Use "---" to insert divider pages between sections
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button id="createStructureBtn" class="btn btn-primary" disabled>
+        <span>&#128196;</span>
+        Create Structure
+      </button>
+      <button id="cancelBtn2" class="btn btn-secondary">Cancel</button>
     </div>
   </div>
 
-  <div class="buttons">
-    <button id="createStructureBtn" class="primary" disabled>Create Structure</button>
-    <button id="cancelBtn2" class="secondary">Cancel</button>
+  <!-- Tab 3: Configuration -->
+  <div class="tab-content" id="config-tab">
+    <h1 class="section-title">Configuration</h1>
+    <p class="section-subtitle">Import and manage custom templates</p>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">&#128230;</div>
+        <div>
+          <div class="card-title">Import Template</div>
+          <div class="card-desc">Add a custom JSON template</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Template Name</label>
+        <input
+          id="importName"
+          class="form-input"
+          type="text"
+          placeholder="e.g., Client Playbook"
+        />
+        <div class="form-hint">Used as the card label in Create Structure</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Template File</label>
+        <div class="file-input-wrapper">
+          <input id="importFile" type="file" accept="application/json" />
+          <div class="file-input-icon">&#128194;</div>
+          <div class="file-input-text">Drop JSON file or click to browse</div>
+          <div class="file-input-hint">Accepts .json files</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-banner info" id="importStatusBanner">
+      <span class="status-icon">&#8505;</span>
+      <span id="importStatus">Select a JSON file to validate and save.</span>
+    </div>
+
+    <div class="btn-group">
+      <button id="saveImportBtn" class="btn btn-primary" disabled>
+        <span>&#128190;</span>
+        Save Template
+      </button>
+      <button id="cancelBtn3" class="btn btn-secondary">Cancel</button>
+    </div>
   </div>
 </div>
 
 <script>
-// Tab switching
-const tabs = document.querySelectorAll('.tab');
-const tabContents = document.querySelectorAll('.tab-content');
+  // Tab switching
+  const tabs = document.querySelectorAll(".nav-tab");
+  const tabContents = document.querySelectorAll(".tab-content");
 
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    const targetTab = tab.dataset.tab;
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const targetTab = tab.dataset.tab;
 
-    tabs.forEach(t => t.classList.remove('active'));
-    tabContents.forEach(tc => tc.classList.remove('active'));
+      tabs.forEach((t) => t.classList.remove("active"));
+      tabContents.forEach((tc) => tc.classList.remove("active"));
 
-    tab.classList.add('active');
-    document.getElementById(targetTab + '-tab').classList.add('active');
+      tab.classList.add("active");
+      document.getElementById(targetTab + "-tab").classList.add("active");
+    });
   });
-});
 
-// ============ RENAME TAB ============
-const clientNameInput = document.getElementById('clientName');
-const productNameInput = document.getElementById('productName');
-const versionInput = document.getElementById('version');
-const tagsInput = document.getElementById('tags');
-const descriptionInput = document.getElementById('description');
-const renameButton = document.getElementById('renameBtn');
-const previewText = document.getElementById('preview');
+  // ============ RENAME TAB ============
+  const clientNameInput = document.getElementById("clientName");
+  const productNameInput = document.getElementById("productName");
+  const versionInput = document.getElementById("version");
+  const tagsInput = document.getElementById("tags");
+  const descriptionInput = document.getElementById("description");
+  const renameButton = document.getElementById("renameBtn");
+  const previewText = document.getElementById("preview");
+  const tagsPreview = document.getElementById("tagsPreview");
 
-function updatePreview() {
-  const clientName = clientNameInput.value.trim();
-  const productName = productNameInput.value.trim();
-  const version = versionInput.value.trim();
-  const tags = tagsInput.value.trim();
+  // Tags management
+  let tagsArray = [];
 
-  if (!productName) {
-    previewText.textContent = 'Enter product name to see preview';
-    renameButton.disabled = true;
-    return;
+  function renderTags() {
+    tagsPreview.innerHTML = "";
+    tagsArray.forEach((tag, index) => {
+      const chip = document.createElement("span");
+      chip.className = "tag-chip";
+
+      const tagText = document.createElement("span");
+      tagText.textContent = tag;
+      chip.appendChild(tagText);
+
+      const removeBtn = document.createElement("span");
+      removeBtn.className = "tag-chip-remove";
+      removeBtn.innerHTML = "&#10005;";
+      removeBtn.addEventListener("click", () => {
+        tagsArray.splice(index, 1);
+        renderTags();
+        updatePreview();
+      });
+      chip.appendChild(removeBtn);
+
+      tagsPreview.appendChild(chip);
+    });
   }
 
-  // Build filename: [Client] - Product Name - v1.0 [tags]
-  let fileName = '';
-
-  if (clientName) {
-    fileName += '[' + clientName + '] ';
+  function getTagsString() {
+    return tagsArray.join(", ");
   }
 
-  fileName += productName;
+  function updatePreview() {
+    const clientName = clientNameInput.value.trim();
+    const productName = productNameInput.value.trim();
+    const version = versionInput.value.trim();
 
-  if (version) {
-    fileName += ' - v' + version;
+    if (!productName) {
+      previewText.textContent = "Enter product name to see preview";
+      renameButton.disabled = true;
+      return;
+    }
+
+    // Build filename: [Client] - Product Name - v1.0 [tags]
+    let fileName = "";
+
+    if (clientName) {
+      fileName += "[" + clientName + "] ";
+    }
+
+    fileName += productName;
+
+    if (version) {
+      fileName += " - v" + version;
+    }
+
+    if (tagsArray.length > 0) {
+      fileName += " [" + tagsArray.join(", ") + "]";
+    }
+
+    previewText.textContent = fileName;
+    renameButton.disabled = false;
   }
 
-  if (tags) {
-    const tagArray = tags.split(',').map(t => t.trim()).filter(t => t);
-    if (tagArray.length > 0) {
-      fileName += ' [' + tagArray.join(', ') + ']';
+  // Handle comma to create tag
+  tagsInput.addEventListener("input", (e) => {
+    const value = tagsInput.value;
+    if (value.includes(",")) {
+      const parts = value.split(",");
+      parts.forEach((part, index) => {
+        const trimmed = part.trim();
+        // Add all parts except the last one (which stays in the input)
+        if (
+          index < parts.length - 1 &&
+          trimmed &&
+          !tagsArray.includes(trimmed)
+        ) {
+          tagsArray.push(trimmed);
+        }
+      });
+      // Keep only the text after the last comma in the input
+      tagsInput.value = parts[parts.length - 1].trimStart();
+      renderTags();
+      updatePreview();
+    }
+  });
+
+  // Handle Enter key to create tag
+  tagsInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const trimmed = tagsInput.value.trim();
+      if (trimmed && !tagsArray.includes(trimmed)) {
+        tagsArray.push(trimmed);
+        tagsInput.value = "";
+        renderTags();
+        updatePreview();
+      }
+    }
+    // Handle backspace to remove last tag when input is empty
+    if (
+      e.key === "Backspace" &&
+      tagsInput.value === "" &&
+      tagsArray.length > 0
+    ) {
+      tagsArray.pop();
+      renderTags();
+      updatePreview();
+    }
+  });
+
+  clientNameInput.addEventListener("input", updatePreview);
+  productNameInput.addEventListener("input", updatePreview);
+  versionInput.addEventListener("input", updatePreview);
+
+  renameButton.addEventListener("click", () => {
+    const clientName = clientNameInput.value.trim();
+    const productName = productNameInput.value.trim();
+    const version = versionInput.value.trim();
+    // Include any text remaining in the input as a tag
+    const remainingTag = tagsInput.value.trim();
+    if (remainingTag && !tagsArray.includes(remainingTag)) {
+      tagsArray.push(remainingTag);
+    }
+    const tags = tagsArray.join(", ");
+    const description = descriptionInput.value.trim();
+
+    if (!productName) return;
+
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "rename-file",
+          clientName,
+          productName,
+          version,
+          tags,
+          description,
+        },
+      },
+      "*",
+    );
+  });
+
+  document.getElementById("cancelBtn1").addEventListener("click", () => {
+    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
+  });
+
+  // ============ STRUCTURE TAB ============
+  const projectCards = document.querySelectorAll(".project-card");
+  const createStructureBtn = document.getElementById("createStructureBtn");
+  const customStructureInput = document.getElementById("customStructureInput");
+  const customPagesTextarea = document.getElementById("customPages");
+  const importedCard = document.getElementById("importedCard");
+  const importedDesc = document.getElementById("importedDesc");
+  const importedPages = document.getElementById("importedPages");
+  let importedTemplateMeta = { name: "", pages: 0 };
+  let selectedProjectType = null;
+
+  function setImportedCard(template) {
+    if (!template || !template.name || !template.pages) return;
+    const pages = Array.isArray(template.pages) ? template.pages : [];
+    const pageCount = pages.length || template.pages;
+    importedTemplateMeta = { name: template.name, pages: pageCount };
+    importedCard.style.display = "block";
+    importedDesc.textContent = template.name;
+    importedPages.innerHTML = "";
+
+    // Filter out dividers and get actual page names
+    const actualPages = pages.filter(p => p && !p.isDivider && p.name && p.name !== "---");
+    const displayPages = actualPages.slice(0, 5);
+
+    displayPages.forEach((page) => {
+      const tag = document.createElement("span");
+      tag.className = "page-tag";
+      tag.textContent = page.name || page;
+      importedPages.appendChild(tag);
+    });
+
+    if (actualPages.length > 5) {
+      const tag = document.createElement("span");
+      tag.className = "page-tag";
+      tag.textContent = `+${actualPages.length - 5} more`;
+      importedPages.appendChild(tag);
+    }
+    if (selectedProjectType === "imported") {
+      updateCreateButtonState();
     }
   }
 
-  previewText.textContent = fileName;
-  renameButton.disabled = false;
-}
-
-clientNameInput.addEventListener('input', updatePreview);
-productNameInput.addEventListener('input', updatePreview);
-versionInput.addEventListener('input', updatePreview);
-tagsInput.addEventListener('input', updatePreview);
-
-renameButton.addEventListener('click', () => {
-  const clientName = clientNameInput.value.trim();
-  const productName = productNameInput.value.trim();
-  const version = versionInput.value.trim();
-  const tags = tagsInput.value.trim();
-  const description = descriptionInput.value.trim();
-
-  if (!productName) return;
-
-  parent.postMessage({
-    pluginMessage: {
-      type: 'rename-file',
-      clientName,
-      productName,
-      version,
-      tags,
-      description
+  function updateCreateButtonState() {
+    if (!selectedProjectType) {
+      createStructureBtn.disabled = true;
+      return;
     }
-  }, '*');
-});
 
-document.getElementById('cancelBtn1').addEventListener('click', () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
-});
-
-// ============ STRUCTURE TAB ============
-const projectCards = document.querySelectorAll('.project-card');
-const createStructureBtn = document.getElementById('createStructureBtn');
-const customStructureInput = document.getElementById('customStructureInput');
-const customPagesTextarea = document.getElementById('customPages');
-let selectedProjectType = null;
-
-projectCards.forEach(card => {
-  card.addEventListener('click', () => {
-    projectCards.forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-    selectedProjectType = card.dataset.type;
-
-    // Show/hide custom input
-    if (selectedProjectType === 'custom') {
-      customStructureInput.style.display = 'block';
+    if (selectedProjectType === "custom") {
       createStructureBtn.disabled = !customPagesTextarea.value.trim();
-    } else {
-      customStructureInput.style.display = 'none';
-      createStructureBtn.disabled = false;
+      return;
+    }
+
+    if (selectedProjectType === "imported") {
+      createStructureBtn.disabled = importedTemplateMeta.pages <= 0;
+      return;
+    }
+
+    createStructureBtn.disabled = false;
+  }
+
+  projectCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      projectCards.forEach((c) => c.classList.remove("selected"));
+      card.classList.add("selected");
+      selectedProjectType = card.dataset.type;
+
+      // Show/hide custom input
+      if (selectedProjectType === "custom") {
+        customStructureInput.classList.add("visible");
+      } else {
+        customStructureInput.classList.remove("visible");
+      }
+
+      updateCreateButtonState();
+    });
+  });
+
+  // Enable button when custom pages are typed
+  customPagesTextarea.addEventListener("input", () => {
+    updateCreateButtonState();
+  });
+
+  createStructureBtn.addEventListener("click", () => {
+    if (!selectedProjectType) return;
+
+    const message = {
+      type: "create-structure",
+      projectType: selectedProjectType,
+    };
+
+    // If custom, add the page names
+    if (selectedProjectType === "custom") {
+      const customPages = customPagesTextarea.value
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0);
+
+      if (customPages.length === 0) return;
+
+      message.customPages = customPages;
+    }
+
+    parent.postMessage(
+      {
+        pluginMessage: message,
+      },
+      "*",
+    );
+  });
+
+  document.getElementById("cancelBtn2").addEventListener("click", () => {
+    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
+  });
+
+  // ============ CONFIGURATION TAB ============
+  const importNameInput = document.getElementById("importName");
+  const importFileInput = document.getElementById("importFile");
+  const importStatus = document.getElementById("importStatus");
+  const importStatusBanner = document.getElementById("importStatusBanner");
+  const saveImportBtn = document.getElementById("saveImportBtn");
+  const cancelBtn3 = document.getElementById("cancelBtn3");
+  let importedTemplatePayload = null;
+
+  function normalizeImportedPages(json) {
+    const rawPages = Array.isArray(json) ? json : json?.pages;
+    if (!Array.isArray(rawPages)) return [];
+
+    return rawPages
+      .map((page) => ({
+        name: page.name || "",
+        description: page.description || "Custom page",
+        bestPractices: Array.isArray(page.bestPractices)
+          ? page.bestPractices
+          : [],
+        isDivider: page.isDivider === true,
+      }))
+      .filter((page) => page.name);
+  }
+
+  function refreshImportStatus(text, type = "info") {
+    importStatus.textContent = text;
+    importStatusBanner.className = "status-banner " + type;
+
+    const iconMap = {
+      info: "&#8505;",
+      success: "&#10004;",
+      error: "&#10006;",
+    };
+    importStatusBanner.querySelector(".status-icon").innerHTML =
+      iconMap[type] || iconMap.info;
+  }
+
+  importFileInput.addEventListener("change", (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+        const normalizedPages = normalizeImportedPages(parsed);
+
+        if (normalizedPages.length === 0) {
+          importedTemplatePayload = null;
+          saveImportBtn.disabled = true;
+          refreshImportStatus(
+            "Invalid JSON: provide an array of pages with names.",
+            "error",
+          );
+          return;
+        }
+
+        const derivedName =
+          importNameInput.value.trim() || parsed.name || "Imported Template";
+        importedTemplatePayload = {
+          name: derivedName,
+          pages: normalizedPages,
+        };
+
+        saveImportBtn.disabled = false;
+        refreshImportStatus(
+          `Ready to save "${derivedName}" (${normalizedPages.length} pages).`,
+          "success",
+        );
+      } catch (error) {
+        importedTemplatePayload = null;
+        saveImportBtn.disabled = true;
+        refreshImportStatus("Invalid JSON: " + error.message, "error");
+      }
+    };
+
+    reader.onerror = () => {
+      importedTemplatePayload = null;
+      saveImportBtn.disabled = true;
+      refreshImportStatus("Could not read file.", "error");
+    };
+
+    reader.readAsText(file);
+  });
+
+  importNameInput.addEventListener("input", () => {
+    if (importedTemplatePayload) {
+      importedTemplatePayload = {
+        ...importedTemplatePayload,
+        name: importNameInput.value.trim() || importedTemplatePayload.name,
+      };
     }
   });
-});
 
-// Enable button when custom pages are typed
-customPagesTextarea.addEventListener('input', () => {
-  if (selectedProjectType === 'custom') {
-    createStructureBtn.disabled = !customPagesTextarea.value.trim();
-  }
-});
+  saveImportBtn.addEventListener("click", () => {
+    if (!importedTemplatePayload || !importedTemplatePayload.name) return;
 
-createStructureBtn.addEventListener('click', () => {
-  if (!selectedProjectType) return;
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "save-imported-template",
+          importedTemplate: importedTemplatePayload,
+        },
+      },
+      "*",
+    );
 
-  const message = {
-    type: 'create-structure',
-    projectType: selectedProjectType
+    refreshImportStatus("Saving template...", "info");
+    saveImportBtn.disabled = true;
+  });
+
+  cancelBtn3.addEventListener("click", () => {
+    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
+  });
+
+  // ============ MESSAGE HANDLING ============
+  window.onmessage = (event) => {
+    const msg = event.data.pluginMessage || event.data;
+
+    // Load existing data and populate fields
+    if (msg.type === "load-existing-data") {
+      const data = msg.data;
+      let hasExistingData = false;
+
+      if (data.clientName) {
+        clientNameInput.value = data.clientName;
+        hasExistingData = true;
+      }
+      if (data.productName) {
+        productNameInput.value = data.productName;
+        hasExistingData = true;
+      }
+      if (data.version) {
+        versionInput.value = data.version;
+        hasExistingData = true;
+      }
+      if (data.tags) {
+        // Parse existing tags into array
+        tagsArray = data.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter((t) => t);
+        renderTags();
+        hasExistingData = true;
+      }
+      if (data.description) {
+        descriptionInput.value = data.description;
+        hasExistingData = true;
+      }
+
+      // Change button text if updating existing data
+      if (hasExistingData) {
+        renameButton.innerHTML =
+          '<span class="wave-icon">&#128075;</span> Update File';
+      }
+
+      // Update preview if data exists
+      updatePreview();
+
+      if (data.importedTemplateName && data.importedTemplatePages > 0) {
+        setImportedCard({
+          name: data.importedTemplateName,
+          pages: data.importedTemplatePages,
+        });
+      }
+
+      updateCreateButtonState();
+    }
+
+    if (msg.type === "imported-template-saved") {
+      const tpl = msg.data;
+      if (tpl?.name && tpl.pages?.length) {
+        setImportedCard({ name: tpl.name, pages: tpl.pages });
+        refreshImportStatus(
+          `Saved "${tpl.name}" (${tpl.pages.length} pages).`,
+          "success",
+        );
+      }
+    }
   };
 
-  // If custom, add the page names
-  if (selectedProjectType === 'custom') {
-    const customPages = customPagesTextarea.value
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => line.length > 0);
-
-    if (customPages.length === 0) return;
-
-    message.customPages = customPages;
-  }
-
-  parent.postMessage({
-    pluginMessage: message
-  }, '*');
-});
-
-document.getElementById('cancelBtn2').addEventListener('click', () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
-});
-
-// ============ MESSAGE HANDLING ============
-window.onmessage = (event) => {
-  const msg = event.data.pluginMessage;
-
-  // Load existing data and populate fields
-  if (msg.type === 'load-existing-data') {
-    const data = msg.data;
-    let hasExistingData = false;
-
-    if (data.clientName) {
-      clientNameInput.value = data.clientName;
-      hasExistingData = true;
-    }
-    if (data.productName) {
-      productNameInput.value = data.productName;
-      hasExistingData = true;
-    }
-    if (data.version) {
-      versionInput.value = data.version;
-      hasExistingData = true;
-    }
-    if (data.tags) {
-      tagsInput.value = data.tags;
-      hasExistingData = true;
-    }
-    if (data.description) {
-      descriptionInput.value = data.description;
-      hasExistingData = true;
-    }
-
-    // Change button text if updating existing data
-    if (hasExistingData) {
-      renameButton.textContent = 'Update File';
-    }
-
-    // Update preview if data exists
-    updatePreview();
-  }
-};
-
-// Focus on product name input on load
-productNameInput.focus();
+  // Focus on product name input on load
+  productNameInput.focus();
 </script>
