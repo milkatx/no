@@ -535,6 +535,11 @@
     color: #991b1b;
   }
 
+  .status-banner.warning {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
   .status-icon {
     font-size: 16px;
   }
@@ -652,19 +657,6 @@
   }
 </style>
 
-<!-- Header -->
-<div class="header">
-  <div class="logo">
-    <div class="logo-icon">
-      <svg width="14" height="14" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M58 5.00461L120.38 144.605C164.237 138.587 64.592 4.10892 151.84 5.00461V290.605L82.38 112.105C29.4018 120.581 166.321 290.605 58 290.605V5.00461Z" fill="white"/>
-        <path d="M198.821 82.5431C257.382 82.5438 257.382 294.605 198.821 294.606C174.299 294.606 162.197 279.108 162.197 247.707C162.197 200.956 142.107 82.5431 198.821 82.5431ZM198.809 118.605C142.824 118.605 216.879 387.704 216.879 192.716C216.879 151.786 208.789 118.605 198.809 118.605ZM206.854 33.6056C213.38 29.1053 222.38 31.1054 225.253 33.6056C228.125 36.1081 204.379 74.1046 201.379 75.6095C198.379 77.1144 194.379 77.1045 193.379 75.6095C192.38 74.1099 200.328 38.1056 206.854 33.6056Z" fill="white"/>
-      </svg>
-    </div>
-    <span>Nó</span>
-  </div>
-</div>
-
 <!-- Navigation Tabs -->
 <div class="nav-tabs">
   <button class="nav-tab active" data-tab="rename">
@@ -756,7 +748,7 @@
       </div>
     </div>
 
-    <div id="fileStatus" class="status-banner info" style="display: none;">
+    <div id="fileStatus" class="status-banner info" style="display: none">
       <span class="status-icon">&#8505;</span>
       <span id="fileStatusText">Checking file name...</span>
     </div>
@@ -1111,10 +1103,12 @@
   function checkFileNameConvention(fileName) {
     // Pattern: [Client] Product - vX.X [tags] or Product - vX.X [tags]
     // Minimum: just a product name
-    if (!fileName || fileName === "Untitled") return { valid: false, message: "File has no name" };
+    if (!fileName || fileName === "Untitled")
+      return { valid: false, message: "File has no name" };
 
     const generatedName = previewText.textContent;
-    if (generatedName === "Enter product name to see preview") return { valid: false, message: "" };
+    if (generatedName === "Enter product name to see preview")
+      return { valid: false, message: "" };
 
     if (fileName === generatedName) {
       return { valid: true, message: "File name matches convention" };
@@ -1150,8 +1144,8 @@
       fileStatus.className = "status-banner success";
       fileStatus.querySelector(".status-icon").innerHTML = "&#10004;";
     } else {
-      fileStatus.className = "status-banner info";
-      fileStatus.querySelector(".status-icon").innerHTML = "&#8505;";
+      fileStatus.className = "status-banner warning";
+      fileStatus.querySelector(".status-icon").innerHTML = "&#9888;";
     }
   }
 
@@ -1177,12 +1171,12 @@
       await navigator.clipboard.writeText(generatedName);
 
       // Show success feedback
-      renameButton.innerHTML = '<span>&#10004;</span> Copied!';
+      renameButton.innerHTML = "<span>&#10004;</span> Copied!";
       renameButton.classList.add("btn-success");
 
       // Reset button after 2 seconds
       setTimeout(() => {
-        renameButton.innerHTML = '<span>&#128203;</span> Copy Name';
+        renameButton.innerHTML = "<span>&#128203;</span> Copy Name";
         renameButton.classList.remove("btn-success");
       }, 2000);
     } catch (err) {
@@ -1197,11 +1191,11 @@
       document.body.removeChild(textArea);
 
       // Show success feedback
-      renameButton.innerHTML = '<span>&#10004;</span> Copied!';
+      renameButton.innerHTML = "<span>&#10004;</span> Copied!";
       renameButton.classList.add("btn-success");
 
       setTimeout(() => {
-        renameButton.innerHTML = '<span>&#128203;</span> Copy Name';
+        renameButton.innerHTML = "<span>&#128203;</span> Copy Name";
         renameButton.classList.remove("btn-success");
       }, 2000);
     }
@@ -1525,7 +1519,6 @@
         );
       }
     }
-
   };
 
   // Focus on product name input on load
