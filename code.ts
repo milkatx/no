@@ -327,6 +327,7 @@ const existingData = {
   description: existingDescription,
   importedTemplateName: importedTemplate?.name ?? "",
   importedTemplatePages: importedTemplate?.pages?.length ?? 0,
+  currentFileName: figma.root.name,
 };
 
 figma.ui.postMessage({
@@ -336,45 +337,9 @@ figma.ui.postMessage({
 
 // Handle messages from the UI
 figma.ui.onmessage = async (msg: PluginMessage) => {
-  // ============ RENAME FILE ============
-  if (msg.type === "rename-file") {
+  // ============ SAVE METADATA ============
+  if (msg.type === "save-metadata") {
     try {
-      // Check if this is an update or new rename
-      const hasExistingData =
-        existingClientName ||
-        existingProductName ||
-        existingVersion ||
-        existingTags ||
-        existingDescription;
-
-      // Build the new file name: [Client] Product Name - v1.0 [tags]
-      let newFileName = "";
-
-      // Add client name if provided
-      if (msg.clientName) {
-        newFileName += "[" + msg.clientName + "] ";
-      }
-
-      // Add product name (required)
-      newFileName += msg.productName || "Untitled";
-
-      // Add version if provided
-      if (msg.version) {
-        newFileName += " - v" + msg.version;
-      }
-
-      // Add tags if provided
-      if (msg.tags) {
-        const tagArray = msg.tags
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter((tag) => tag.length > 0);
-
-        if (tagArray.length > 0) {
-          newFileName += " [" + tagArray.join(", ") + "]";
-        }
-      }
-
       // Store metadata as plugin data
       figma.root.setPluginData("clientName", msg.clientName || "");
       figma.root.setPluginData("productName", msg.productName || "");
@@ -385,21 +350,12 @@ figma.ui.onmessage = async (msg: PluginMessage) => {
       }
       figma.root.setPluginData("lastUpdated", new Date().toISOString());
 
-      // Rename the file directly
-      figma.root.name = newFileName;
-
-      // Show success notification based on whether it's update or new
-      const action = hasExistingData ? "updated" : "renamed";
-      figma.notify(`✅ File ${action} to: ${newFileName}`, { timeout: 3000 });
-
-      // Close the plugin
-      figma.closePlugin();
+      figma.notify("✅ Name copied & metadata saved", { timeout: 2000 });
     } catch (error) {
-      figma.notify("❌ Error renaming file: " + (error as Error).message, {
+      figma.notify("❌ Error: " + (error as Error).message, {
         error: true,
         timeout: 3000,
       });
-      figma.closePlugin();
     }
   }
 

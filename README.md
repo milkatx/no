@@ -4,10 +4,12 @@ Figma plugin for consistent file naming and project page structures.
 
 ## Features
 
-**Rename File**
-- Set client, product name, version, and tags
-- Live preview of the final filename
+**Copy Name**
+- Generate file names with client, product, version, and tags
+- Live preview of the generated name
+- Copy to clipboard with one click (Figma API doesn't allow direct file rename)
 - Metadata stored for future sessions
+- Shows if current file follows naming convention
 
 **Create Structure**
 - Pre-built templates: Web App, Mobile App, Design System, Marketing Website, Branding
