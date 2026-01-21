@@ -1,7 +1,7 @@
 {
-  "name": "figma-file-renamer",
+  "name": "tidy",
   "version": "1.0.0",
-  "description": "Rename Figma files with product name, tags, and description",
+  "description": "Figma plugin for consistent file naming and project page structures",
   "main": "code.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",

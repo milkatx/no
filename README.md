@@ -1,4 +1,4 @@
-# Nó
+# Tidy
 
 Figma plugin for consistent file naming and project page structures.
 
